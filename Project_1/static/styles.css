@@ -19,3 +19,41 @@ body {
     padding: 0;
 }
 
+
+/* main {
+    text-align: center;
+} */
+
+/*just to center the table*/
+#data-div {
+    text-align: center;
+}
+
+table {
+    text-align: center;
+    margin: 30px auto;
+    padding: 40px;
+    border: solid 2px #829fb6;
+    background-color: #ffffff;
+    box-shadow: inset 0px 0px 10px black;
+}
+
+tr {
+    border: solid 2px #829fb6;
+    box-shadow: inset 2px 2px 5px black;
+    box-shadow: inset -2px -2px 5px white;
+}
+
+th {
+    background-color: #accfec;
+    padding: 15px;
+}
+
+td {
+    background-color: #accfec;
+    padding: 15px;
+
+    border-left: solid 1px #99bad5;
+    border-right: solid 1px #99bad5;
+}
+

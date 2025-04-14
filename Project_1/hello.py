@@ -8,13 +8,13 @@ import sqlite3
 # Sci-fi and Fantasy app - Flask connection
 sfapp = Flask(__name__, static_folder='static')
 
-# Routes and renders the main HTML page
+# When the user navigates to '/' ...
 @sfapp.route("/")
-def HomePageRender():
+def HomePageRender():   # Renders the main HTML page
     return render_template('index.html')
 
 
-
+# Executes the provided file (usually my sql files)
 def ExecuteSQLFile(fileName):
     with open(fileName, 'r') as file:
         sqlInstruc = file.read()
@@ -41,11 +41,18 @@ if __name__ == '__main__':
 # Runs query to database
 @sfapp.route('/prices')
 def GetPrices():
-    prices = RunQuery("SELECT * FROM prices;")
+    pricesNames, pricesData = RunQuery("SELECT * FROM prices;")
+
+    prices = {
+        "headers": pricesNames,
+        "data": pricesData
+    }
+
     return jsonify(prices)  # Display data as JSON
 
 if __name__ == '__main__':
     sfapp.run(debug=True)
+
 
 
 

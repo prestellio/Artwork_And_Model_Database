@@ -2,27 +2,29 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-        <script src="scripts.js"></script>
+        <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+        <!-- <link rel="stylesheet" type="text/css" href="../static/styles.css">
+        <script src="../static/scripts.js"></script> -->
     </head>
 
     <body>
         <header>
 
         </header>
-        <main>
-
+        <div id="data-div">
             <table id="information">
                 <thead id = "info-thead">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                    </tr>
+
                 </thead>
                 <tbody id = "info-tbody">
-                    
+                   
                 </tbody>
             </table>
+        </div>
+        <main>
+
+            
 
         </main>
 
