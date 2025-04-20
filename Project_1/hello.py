@@ -1,5 +1,5 @@
-from flask import Flask, jsonify, render_template
-from crud import RunQuery
+from flask import Flask, jsonify, render_template, request, redirect, url_for
+from crud import *
 import sqlite3
 
 # flask --app hello.py run
@@ -50,8 +50,57 @@ def GetPrices():
 
     return jsonify(prices)  # Display data as JSON
 
+@sfapp.route('/insert', methods=['POST'])
+def InsertValues():
+    #table = request.form.get('form_name')
+    values = (request.form.get('input1'), request.form.get('input2'), request.form.get('input3'), request.form.get('input4'), request.form.get('input5'))
+
+    InsertData(values)
+
+    #GetPrices()
+    return redirect(url_for('HomePageRender'))
+
+
+@sfapp.route('/delete', methods=['POST'])
+def DeleteRow():
+    idvalue = request.form.get('delete')
+
+    DeleteData(idvalue)
+
+    return redirect(url_for('HomePageRender'))
+
+
+@sfapp.route('/update', methods=['POST'])
+def UpdateRow():
+    idvalue = request.form.get('update-id')
+    value = request.form.get('update-price')
+
+    UpdateData(idvalue, value)
+
+    return redirect(url_for('HomePageRender'))
+
+@sfapp.route('/read', methods=['GET'])
+def ReadRow():
+    idvalue = request.args.get('read')
+
+    pricesNames, pricesData = ReadData(idvalue)
+
+    prices = {
+        "headers": pricesNames,
+        "data": pricesData
+    }
+
+    return jsonify(prices)  # Display data as JSON
+
+
+
+
 if __name__ == '__main__':
     sfapp.run(debug=True)
+
+
+
+
 
 
 

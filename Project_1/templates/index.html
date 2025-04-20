@@ -23,13 +23,67 @@
             </table>
         </div>
         <main>
+            <form action="/insert" method="POST" name="prices">
+                <input type="hidden" id="form_name" value="Prices">
+                <!-- Text Input Fields -->
+                <label for="input1">First Input:</label><br>
+                <input type="text" id="input1" name="input1"><br><br>
 
+                <label for="input2">Second Input:</label><br>
+                <input type="text" id="input2" name="input2"><br><br>
+
+                <label for="input3">Third Input:</label><br>
+                <input type="text" id="input3" name="input3"><br><br>
+
+                <label for="input4">Fourth Input:</label><br>
+                <input type="text" id="input4" name="input4"><br><br>
+
+                <label for="input5">Fifth Input:</label><br>
+                <input type="text" id="input5" name="input5"><br><br>                
+
+                <!-- Submit Button -->
+                <button type="submit" id="insert-submit">Submit</button>
+            </form>
+
+            <form action="/delete" method="POST" name="prices">
+                <input type="hidden" id="form_name" value="Prices">
+                <!-- Text Input Fields -->
+                <label for="delete">Delete Row with ID:</label><br>
+                <input type="text" id="delete" name="delete"><br><br>              
+
+                <!-- Submit Button -->
+                <button type="submit" id="delete-submit">Submit</button>
+            </form>
+
+
+            <form action="/update" method="POST" name="prices">
+                <input type="hidden" id="form_name" value="Prices">
+                <!-- Text Input Fields -->
+                <label for="update-id">Update Row with ID:</label><br>
+                <input type="text" id="update-id" name="update-id"><br><br>
+                
+                <label for="update-price">Update Price:</label><br>
+                <input type="text" id="update-price" name="update-price"><br><br> 
+
+                <!-- Submit Button -->
+                <button type="submit" id="update-submit">Submit</button>
+            </form>
+
+            <!-- <form method="GET" name="prices"> -->
+                <input type="hidden" id="form_name" value="Prices">
+                <!-- Text Input Fields -->
+                <label for="read">Read Row with ID:</label><br>
+                <input type="text" id="read" name="read"><br><br>              
+
+                <!-- Submit Button -->
+                <button onclick="updateTableWithQuery()" id="read-submit">Submit</button>
+            <!-- </form> -->
             
 
         </main>
 
     </body>
 
-
+ 
 
 </html>
