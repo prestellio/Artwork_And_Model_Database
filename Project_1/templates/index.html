@@ -13,6 +13,15 @@
 
         </header>
         <div id="data-div">
+            <select name="table" id="table-select" onchange="updateTable()" placeholder="Prices">
+                <option value="Prices">Prices</option>
+                <option value="Designs">Designs</option>
+                <option value="Creators">Creators</option>
+                <option value="Characters">Characters</option>
+                <option value="Places">Places</option>
+                <option value="Vehicles">Vehicles</option>
+                <option value="Products">Products</option>
+            </select>
             <table id="information">
                 <thead id = "info-thead">
 
@@ -23,29 +32,36 @@
             </table>
         </div>
         <main>
-            <form action="/insert" method="POST" name="prices">
-                <input type="hidden" id="form_name" value="Prices">
+            <select name="crud" id="operation-select" onchange="changeOperation()">
+                <option value="insertValues">Insert Row</option>
+                <option value="deleteValues">Delete Row</option>
+                <option value="updateValues">Update Row</option>
+                <option value="readValues">Search Table</option>
+            </select>
+            <p id="testtxt"></p>
+            <form action="/insert" method="POST" id="insertValues">
+                <input type="hidden" id="form_name" name="form_name" value="Prices">
                 <!-- Text Input Fields -->
-                <label for="input1">First Input:</label><br>
+                <label for="input1">Form:</label><br>
                 <input type="text" id="input1" name="input1"><br><br>
 
-                <label for="input2">Second Input:</label><br>
+                <label for="input2">Material:</label><br>
                 <input type="text" id="input2" name="input2"><br><br>
 
-                <label for="input3">Third Input:</label><br>
+                <label for="input3">Price:</label><br>
                 <input type="text" id="input3" name="input3"><br><br>
 
-                <label for="input4">Fourth Input:</label><br>
+                <label for="input4">Size:</label><br>
                 <input type="text" id="input4" name="input4"><br><br>
 
-                <label for="input5">Fifth Input:</label><br>
+                <label for="input5">Combination_Id:</label><br>
                 <input type="text" id="input5" name="input5"><br><br>                
 
                 <!-- Submit Button -->
-                <button type="submit" id="insert-submit">Submit</button>
+                <button type="submit" id="insert-submit">Insert Row</button>
             </form>
 
-            <form action="/delete" method="POST" name="prices">
+            <form class="hidden" action="/delete" method="POST" id="deleteValues" name="prices">
                 <input type="hidden" id="form_name" value="Prices">
                 <!-- Text Input Fields -->
                 <label for="delete">Delete Row with ID:</label><br>
@@ -56,7 +72,7 @@
             </form>
 
 
-            <form action="/update" method="POST" name="prices">
+            <form class="hidden" action="/update" method="POST" id="updateValues" name="prices">
                 <input type="hidden" id="form_name" value="Prices">
                 <!-- Text Input Fields -->
                 <label for="update-id">Update Row with ID:</label><br>
@@ -72,11 +88,13 @@
             <!-- <form method="GET" name="prices"> -->
                 <input type="hidden" id="form_name" value="Prices">
                 <!-- Text Input Fields -->
+            <div class="hidden" id="readValues">
                 <label for="read">Read Row with ID:</label><br>
                 <input type="text" id="read" name="read"><br><br>              
 
                 <!-- Submit Button -->
                 <button onclick="updateTableWithQuery()" id="read-submit">Submit</button>
+            </div>
             <!-- </form> -->
             
 

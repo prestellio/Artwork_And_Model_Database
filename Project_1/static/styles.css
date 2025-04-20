@@ -2,6 +2,7 @@
 :root {
     --prime-color-1: #00ff66;
     --prime-color-2: #9628CC;
+    --prime-color-3: #accfec;
   }
 
 header {
@@ -47,18 +48,18 @@ tr {
 }
 
 th {
-    background-color: #accfec;
+    background-color: var(--prime-color-3);
     padding: 15px;
 }
 
 td {
-    background-color: #accfec;
+    background-color: var(--prime-color-3);
     padding: 15px;
     border-left: solid 1px #99bad5;
     border-right: solid 1px #99bad5;
 }
 
-form {
+form, #readValues {
     border: solid 1px black;
     border-radius: 15px;
     box-shadow: inset 3px 3px 10px #999;
@@ -67,11 +68,12 @@ form {
     padding: 10px;
 }
 
-form input {
+input {
     border-radius: 5px;
     height: 25px;
     width: 30%;
     background-color: #e5f3ff;
+    cursor: pointer;
 }
 
 form input:focus {
@@ -79,4 +81,31 @@ form input:focus {
     height: 25px;
     width: 30%;
     background-color: white;
+}
+
+select {
+    margin-top: 10px;
+    border: solid 1px #7facff;
+    box-shadow: inset 0 0 5px #8cd5ff;
+    border-radius: 5px;
+    height: 40px;
+    width: 10%;
+    cursor: pointer;
+}
+
+main select{
+    width: 25%;
+}
+
+button {
+    background-color: var(--prime-color-2);
+    height: 40px;
+    width: 100px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
 }

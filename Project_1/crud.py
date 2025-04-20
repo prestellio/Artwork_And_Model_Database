@@ -15,12 +15,20 @@ def RunQuery(query):
 
     return fieldNames, result
 
-def InsertData(values):
+def InsertData(table, values):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 
-    sql = """INSERT INTO Prices VALUES (?, ?, ?, ?, ?)"""
+    numVal = "("
 
+    for item in values:
+        numVal += "?,"
+
+    numVal = numVal[:-1]
+    numVal += ")"
+    
+
+    sql = f"""INSERT INTO {table} VALUES {numVal}"""
 
     cursor.execute(sql, values)
 

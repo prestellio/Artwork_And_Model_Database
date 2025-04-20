@@ -50,12 +50,25 @@ def GetPrices():
 
     return jsonify(prices)  # Display data as JSON
 
+
+@sfapp.route('/tableUpdate', methods=['GET'])
+def GetData():
+    table = request.args.get('table')
+    fieldNames, fieldData = RunQuery(f"SELECT * FROM {table};")
+
+    data = {
+        "headers": fieldNames,
+        "data": fieldData
+    }
+
+    return jsonify(data)  # Display data as JSON
+
 @sfapp.route('/insert', methods=['POST'])
 def InsertValues():
-    #table = request.form.get('form_name')
+    table = request.form.get('form_name')
     values = (request.form.get('input1'), request.form.get('input2'), request.form.get('input3'), request.form.get('input4'), request.form.get('input5'))
 
-    InsertData(values)
+    InsertData(table, values)
 
     #GetPrices()
     return redirect(url_for('HomePageRender'))
