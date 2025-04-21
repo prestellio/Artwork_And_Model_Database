@@ -76,9 +76,25 @@ def InsertValues():
 
 @sfapp.route('/delete', methods=['POST'])
 def DeleteRow():
-    idvalue = request.form.get('delete')
+    table = request.form.get('form_name')
+    #values = (request.form.get('delete1'), request.form.get('delete2'), request.form.get('delete3'), request.form.get('delete4'), request.form.get('delete5'))
+    valueList = [value for value in request.form.values()]
 
-    DeleteData(idvalue)
+    table = valueList[1]
+    values = valueList[2:]
+
+    checkedValues = []
+    checkedFields = []
+
+
+    # Checking for empty values so the the function will know
+    for index, item in enumerate(values):
+        if item != "":
+            checkedValues.append(item)
+            checkedFields.append(index)
+
+
+    DeleteData(table, checkedFields, checkedValues)
 
     return redirect(url_for('HomePageRender'))
 

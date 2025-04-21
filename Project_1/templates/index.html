@@ -38,7 +38,6 @@
                 <option value="updateValues">Update Row</option>
                 <option value="readValues">Search Table</option>
             </select>
-            <p id="testtxt"></p>
             <form action="/insert" method="POST" id="insertValues">
                 <input type="hidden" id="form_name" name="form_name" value="Prices">
                 <!-- Text Input Fields -->
@@ -60,43 +59,62 @@
                 <!-- Submit Button -->
                 <button type="submit" id="insert-submit">Insert Row</button>
             </form>
-
-            <form class="hidden" action="/delete" method="POST" id="deleteValues" name="prices">
+            
+            <form class="hidden" action="/delete" method="POST" id="deleteValues">
                 <input type="hidden" id="form_name" value="Prices">
                 <!-- Text Input Fields -->
-                <label for="delete">Delete Row with ID:</label><br>
-                <input type="text" id="delete" name="delete"><br><br>              
+                <label for="delete1">Form</label><br>
+                <input type="text" id="delete1" name="delete1"><br><br>
+
+                <label for="delete2">Material</label><br>
+                <input type="text" id="delete2" name="delete2"><br><br>
+
+                <label for="delete3">Price</label><br>
+                <input type="text" id="delete3" name="delete3"><br><br>
+
+                <label for="delete4">Size</label><br>
+                <input type="text" id="delete4" name="delete4"><br><br>
+
+                <label for="delete5">Combination_Id</label><br>
+                <input type="text" id="delete5" name="delete5"><br><br> 
 
                 <!-- Submit Button -->
-                <button type="submit" id="delete-submit">Submit</button>
+                <button type="submit" id="delete-submit">Delete Row(s)</button>
             </form>
 
 
             <form class="hidden" action="/update" method="POST" id="updateValues" name="prices">
                 <input type="hidden" id="form_name" value="Prices">
                 <!-- Text Input Fields -->
-                <label for="update-id">Update Row with ID:</label><br>
-                <input type="text" id="update-id" name="update-id"><br><br>
-                
-                <label for="update-price">Update Price:</label><br>
-                <input type="text" id="update-price" name="update-price"><br><br> 
+                <label for="field-select">Update Field:</label><br>
+                <select name="field-select" id="field-select">
+                    <option value="form">Form</option>
+                    <option value="material">Material</option>
+                    <option value="price">Price</option>
+                    <option value="size">Size</option>
+                    <option value="combination_id">Combination_Id</option>
+                </select>
+
+                <label for="update1">With Value:</label><br>
+                <input type="text" id="update1" name="update1"><br><br>
+
+                <label for="update1">Row:</label><br>
+                <input type="text" id="update2" name="update2"><br><br>
 
                 <!-- Submit Button -->
-                <button type="submit" id="update-submit">Submit</button>
+                <button type="submit" id="update-submit">Update Column</button>
             </form>
 
-            <!-- <form method="GET" name="prices"> -->
-                <input type="hidden" id="form_name" value="Prices">
+                <!-- Read -->
                 <!-- Text Input Fields -->
             <div class="hidden" id="readValues">
+                <input type="hidden" id="form_name" value="Prices">
                 <label for="read">Read Row with ID:</label><br>
                 <input type="text" id="read" name="read"><br><br>              
 
                 <!-- Submit Button -->
                 <button onclick="updateTableWithQuery()" id="read-submit">Submit</button>
             </div>
-            <!-- </form> -->
-            
 
         </main>
 

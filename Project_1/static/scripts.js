@@ -136,6 +136,56 @@ async function updateTable() {
 
         form.appendChild(button);
 
+
+        // Delete Inputs
+        form = document.getElementById('deleteValues');
+        form.innerHTML = '';
+
+        //Creates hidden input with table name
+        tableValue = document.createElement('input');
+        tableValue.setAttribute("type", "hidden");
+        tableValue.setAttribute("id", "form_name");
+        tableValue.setAttribute("value", tableName);
+
+        form.appendChild(tableValue);
+
+        //Starts to loop through column names and adding input and labels
+        count = 1;
+
+        jsonData.headers.forEach( column => {
+            let label = document.createElement('label');
+            let input = document.createElement('input');
+            let br1 = document.createElement('br');
+            let br2 = document.createElement('br');
+            let br3 = document.createElement('br');
+
+            label.setAttribute("for", `delete${count}`);
+            label.innerHTML = `${column}:`;
+
+            input.setAttribute("type", "text");
+            input.setAttribute("id", `delete${count}`);
+            input.setAttribute("name", `delete${count}`);
+            input.setAttribute("placeholder", `${column}`);
+
+            form.appendChild(label);
+            form.appendChild(br1);
+
+            form.appendChild(input);
+            form.appendChild(br2);
+            form.appendChild(br3);
+
+            count += 1;
+        });
+
+        // Form button appened
+        button = document.createElement('button');
+        button.setAttribute("type", "submit");
+        button.setAttribute("id", "delete-submit");
+        button.innerHTML = "Delete Row(s)";
+
+        form.appendChild(button);
+
+
     } catch (error) {
         console.error('Error fetching data:', error);
     }
