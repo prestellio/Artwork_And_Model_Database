@@ -88,29 +88,59 @@
                 <!-- Text Input Fields -->
                 <label for="field-select">Update Field:</label><br>
                 <select name="field-select" id="field-select">
-                    <option value="form">Form</option>
-                    <option value="material">Material</option>
-                    <option value="price">Price</option>
-                    <option value="size">Size</option>
-                    <option value="combination_id">Combination_Id</option>
+                    <option value="Form">Form</option>
+                    <option value="Material">Material</option>
+                    <option value="Price">Price</option>
+                    <option value="Size">Size</option>
+                    <option value="Combination_Id">Combination_Id</option>
                 </select>
 
-                <label for="update1">With Value:</label><br>
+                <label for="updateValue">With Value:</label><br>
+                <input type="text" id="updateValue" name="updateValue"><br><br>
+
+                <p>Where columns are:</p>>
+
+                <label for="update1">Form</label><br>
                 <input type="text" id="update1" name="update1"><br><br>
 
-                <label for="update1">Row:</label><br>
+                <label for="update2">Material</label><br>
                 <input type="text" id="update2" name="update2"><br><br>
 
+                <label for="update3">Price</label><br>
+                <input type="text" id="update3" name="update3"><br><br>
+
+                <label for="update4">Size</label><br>
+                <input type="text" id="update4" name="update4"><br><br>
+
+                <label for="update5">Combination_Id</label><br>
+                <input type="text" id="update5" name="update5"><br><br> 
+
+                <input type="hidden" id="updateCount" value="5">
+
                 <!-- Submit Button -->
-                <button type="submit" id="update-submit">Update Column</button>
+                <button type="submit" id="update-submit">Update Row(s)</button>
             </form>
 
                 <!-- Read -->
                 <!-- Text Input Fields -->
             <div class="hidden" id="readValues">
                 <input type="hidden" id="form_name" value="Prices">
-                <label for="read">Read Row with ID:</label><br>
-                <input type="text" id="read" name="read"><br><br>              
+                <p>Read row with:</p>
+
+                <label for="read1">Form:</label><br>
+                <input type="text" id="read1" name="read1"><br><br>
+                
+                <label for="read2">Material:</label><br>
+                <input type="text" id="read2" name="read2"><br><br>   
+
+                <label for="read3">Price:</label><br>
+                <input type="text" id="read3" name="read3"><br><br>   
+
+                <label for="read4">Size:</label><br>
+                <input type="text" id="read4" name="read4"><br><br>   
+
+                <label for="read5">Combination_Id:</label><br>
+                <input type="text" id="read5" name="read5"><br><br>   
 
                 <!-- Submit Button -->
                 <button onclick="updateTableWithQuery()" id="read-submit">Submit</button>

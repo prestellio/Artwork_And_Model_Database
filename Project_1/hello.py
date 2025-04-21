@@ -101,18 +101,31 @@ def DeleteRow():
 
 @sfapp.route('/update', methods=['POST'])
 def UpdateRow():
-    idvalue = request.form.get('update-id')
-    value = request.form.get('update-price')
+    table = request.form.get('form_name')
+    field = request.form.get('field-select')
+    value = request.form.get('updateValue')
+    count = request.form.get('updateCount')
+    findValues = []
+    checkedFields = []
+    
+    for i in range(count):
+        input = request.form.get(f'update{i}')
+        if input != "":
+            findValues += input
+            checkedFields = i
 
-    UpdateData(idvalue, value)
+
+    UpdateData(table, field, value, checkedFields, findValues)
 
     return redirect(url_for('HomePageRender'))
 
 @sfapp.route('/read', methods=['GET'])
 def ReadRow():
-    idvalue = request.args.get('read')
+    table = request.args.get('table')
+    values = [request.args.get('read1'), request.args.get('read2'), request.args.get('read3'), request.args.get('read4'), request.args.get('read5')]
 
-    pricesNames, pricesData = ReadData(idvalue)
+
+    pricesNames, pricesData = ReadData(table, values)
 
     prices = {
         "headers": pricesNames,

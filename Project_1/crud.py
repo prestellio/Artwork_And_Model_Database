@@ -28,6 +28,18 @@ def GetFields(table):
 
     return fieldNames
 
+    # conn = sqlite3.connect('your_database.db')
+    # cursor = conn.cursor()
+
+    # cursor.execute(f"PRAGMA table_info({table})")
+
+    # # Extract column names from the query result
+    # columns = [row[1] for row in cursor.fetchall()]
+
+    # conn.close()
+
+    # return columns
+
 def InsertData(table, values):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
@@ -71,19 +83,31 @@ def DeleteData(table, checkedFields, values):
     conn.close()
 
 
-def UpdateData(id, value):
+def UpdateData(table, updateField, value, fieldsUsedInt, usedValues):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 
-    sql = """UPDATE Prices SET price = ? WHERE combination_id = ?"""
+    # Gets the column names of the table and declares a list
+    fields = GetFields(table)
+    fieldsUsed = []
 
-    cursor.execute(sql, (value, id))
+    # Adds '?, ' for every field that was found to be used ands adds the name of the field to a list
+    sql = f"UPDATE {table} SET {updateField} = {value} WHERE combination_id = "
+    if fieldsUsedInt.length != 0:
+        for i in range(fieldsUsedInt.length-1):
+            sql += "?, "
+            fieldsUsed += fields[fieldsUsedInt[i]]
+
+    # Removes ', ' from the end of the sql string
+    sql = sql[:-2]
+
+    cursor.execute(sql, usedValues)
 
     conn.commit()
     conn.close()
 
 
-def ReadData(id):
+def ReadData(table, values):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 
