@@ -16,7 +16,6 @@ def RunQuery(query):
     return fieldNames, result
 
 def GetFields(table):
-    print(table)
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     sql = f"SELECT * FROM {table}"
@@ -66,18 +65,23 @@ def DeleteData(table, checkedFields, values):
     cursor = conn.cursor()
 
     fieldNames = GetFields(table)
+    fields = []
 
-    #for item in checkedFields:
-        #fields = fieldNames[item]
+    for item in checkedFields:
+        fields.append(fieldNames[item])
+        #print(f"{fieldNames[item]}\n")
 
     sql = f"DELETE FROM {table} WHERE "
 
-    #for item in fields:
-    #    sql += item + " = ?, "
-
-    sql = sql[:-2]
-
-    #cursor.execute(sql, values)
+    if fields == fieldNames[checkedFields[0]]:
+        sql += f"{fields} = ?"
+    else:
+        for item in fields:
+            sql += f"{item} = ? AND "
+        sql = sql[:-5]
+    
+    print(sql)
+    cursor.execute(sql, values)
 
     conn.commit()
     conn.close()
@@ -89,17 +93,16 @@ def UpdateData(table, updateField, value, fieldsUsedInt, usedValues):
 
     # Gets the column names of the table and declares a list
     fields = GetFields(table)
-    fieldsUsed = []
 
     # Adds '?, ' for every field that was found to be used ands adds the name of the field to a list
-    sql = f"UPDATE {table} SET {updateField} = {value} WHERE combination_id = "
-    if fieldsUsedInt.length != 0:
-        for i in range(fieldsUsedInt.length-1):
-            sql += "?, "
-            fieldsUsed += fields[fieldsUsedInt[i]]
+    sql = f"UPDATE {table} SET {updateField} = '{value}' WHERE "
+    print(f"{table}, {updateField}, {value}, {fieldsUsedInt}, {usedValues}")
+    for item in fieldsUsedInt:
+        sql += f"{fields[item]} = ? AND "
 
-    # Removes ', ' from the end of the sql string
-    sql = sql[:-2]
+    print(sql)
+    # Removes ' AND ' from the end of the sql string
+    sql = sql[:-5]
 
     cursor.execute(sql, usedValues)
 
@@ -107,15 +110,22 @@ def UpdateData(table, updateField, value, fieldsUsedInt, usedValues):
     conn.close()
 
 
-def ReadData(table, values):
+def ReadData(table, values, fieldIndexes):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 
-    sql = "SELECT * FROM Prices WHERE combination_id = ?;"
+    fields = GetFields(table)
+    sql = f"SELECT * FROM {table} WHERE "
 
-    cursor.execute(sql, (id,))
+    for item in fieldIndexes:
+        sql += f"{fields[item]} = ? AND "
+    sql = sql[:-5]
+
+    cursor.execute(sql, values)
 
     fieldNames = [description[0] for description in cursor.description]
+
+    print("Got through this function")
 
     result = cursor.fetchall()
     conn.commit()

@@ -65,8 +65,10 @@ def GetData():
 
 @sfapp.route('/insert', methods=['POST'])
 def InsertValues():
-    table = request.form.get('form_name')
-    values = (request.form.get('input1'), request.form.get('input2'), request.form.get('input3'), request.form.get('input4'), request.form.get('input5'))
+    valueList = [value for value in request.form.values()]
+
+    table = valueList[0]
+    values = valueList[1:]
 
     InsertData(table, values)
 
@@ -76,12 +78,12 @@ def InsertValues():
 
 @sfapp.route('/delete', methods=['POST'])
 def DeleteRow():
-    table = request.form.get('form_name')
+    #table = request.form.get('form_name')
     #values = (request.form.get('delete1'), request.form.get('delete2'), request.form.get('delete3'), request.form.get('delete4'), request.form.get('delete5'))
     valueList = [value for value in request.form.values()]
 
-    table = valueList[1]
-    values = valueList[2:]
+    table = valueList[0]
+    values = valueList[1:]
 
     checkedValues = []
     checkedFields = []
@@ -101,38 +103,64 @@ def DeleteRow():
 
 @sfapp.route('/update', methods=['POST'])
 def UpdateRow():
-    table = request.form.get('form_name')
-    field = request.form.get('field-select')
-    value = request.form.get('updateValue')
-    count = request.form.get('updateCount')
+    valueList = [value for value in request.form.values()]
+
+    table = valueList[0]
+    field = valueList[1]
+    updateValue = valueList[2]
+    values = valueList[3:]
+
     findValues = []
     checkedFields = []
     
-    for i in range(count):
-        input = request.form.get(f'update{i}')
-        if input != "":
-            findValues += input
-            checkedFields = i
+    # Put values items that are not empty in findValues and mark the index with checkedFields
+    # checkedFields for finding the field names used
+    for index, item in enumerate(values):
+        if item != "":
+            findValues.append(item)
+            checkedFields.append(index)
 
+    print(f"{table}, {field}, {updateValue}, {checkedFields}, {findValues}")
 
-    UpdateData(table, field, value, checkedFields, findValues)
+    # Checking to see if values are empty
+    if(len(values) != 0):
+        UpdateData(table, field, updateValue, checkedFields, findValues)
 
     return redirect(url_for('HomePageRender'))
 
 @sfapp.route('/read', methods=['GET'])
 def ReadRow():
+
     table = request.args.get('table')
-    values = [request.args.get('read1'), request.args.get('read2'), request.args.get('read3'), request.args.get('read4'), request.args.get('read5')]
+
+    fieldsCount = GetFields(table)
+
+    values = []
+
+    count = 1
+
+    for item in fieldsCount:
+        read = f"read{count}"
+        values.append(request.args.get(read))
+        count += 1
+    
+    checkedValues = []
+    fields = []
+
+    for index, item in enumerate(values):
+        if item != "":
+            checkedValues.append(item)
+            fields.append(index)
 
 
-    pricesNames, pricesData = ReadData(table, values)
+    tableNames, tableData = ReadData(table, checkedValues, fields)
 
-    prices = {
-        "headers": pricesNames,
-        "data": pricesData
+    dataTable = {
+        "headers": tableNames,
+        "data": tableData
     }
 
-    return jsonify(prices)  # Display data as JSON
+    return jsonify(dataTable)  # Display data as JSON
 
 
 

@@ -61,7 +61,7 @@
             </form>
             
             <form class="hidden" action="/delete" method="POST" id="deleteValues">
-                <input type="hidden" id="form_name" value="Prices">
+                <input type="hidden" id="form_name" name="form_name" value="Prices">
                 <!-- Text Input Fields -->
                 <label for="delete1">Form</label><br>
                 <input type="text" id="delete1" name="delete1"><br><br>
@@ -84,7 +84,7 @@
 
 
             <form class="hidden" action="/update" method="POST" id="updateValues" name="prices">
-                <input type="hidden" id="form_name" value="Prices">
+                <input type="hidden" id="form_name" name="form_name" value="Prices">
                 <!-- Text Input Fields -->
                 <label for="field-select">Update Field:</label><br>
                 <select name="field-select" id="field-select">
@@ -93,12 +93,12 @@
                     <option value="Price">Price</option>
                     <option value="Size">Size</option>
                     <option value="Combination_Id">Combination_Id</option>
-                </select>
+                </select><br><br>
 
                 <label for="updateValue">With Value:</label><br>
                 <input type="text" id="updateValue" name="updateValue"><br><br>
 
-                <p>Where columns are:</p>>
+                <p>Where columns are:</p>
 
                 <label for="update1">Form</label><br>
                 <input type="text" id="update1" name="update1"><br><br>
@@ -115,16 +115,14 @@
                 <label for="update5">Combination_Id</label><br>
                 <input type="text" id="update5" name="update5"><br><br> 
 
-                <input type="hidden" id="updateCount" value="5">
-
                 <!-- Submit Button -->
                 <button type="submit" id="update-submit">Update Row(s)</button>
             </form>
 
                 <!-- Read -->
                 <!-- Text Input Fields -->
-            <div class="hidden" id="readValues">
-                <input type="hidden" id="form_name" value="Prices">
+            <div class="hidden" id="readValues" name="readValues">
+                <input type="hidden" id="form_name_r" value="Prices">
                 <p>Read row with:</p>
 
                 <label for="read1">Form:</label><br>
@@ -140,10 +138,12 @@
                 <input type="text" id="read4" name="read4"><br><br>   
 
                 <label for="read5">Combination_Id:</label><br>
-                <input type="text" id="read5" name="read5"><br><br>   
+                <input type="text" id="read5" name="read5"><br><br>
+
+                <input type="hidden" id="read-count" value="5">
 
                 <!-- Submit Button -->
-                <button onclick="updateTableWithQuery()" id="read-submit">Submit</button>
+                <button onclick="UpdateTableWithQuery()" id="read-submit">Send Query</button>
             </div>
 
         </main>

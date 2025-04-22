@@ -64,10 +64,13 @@ async function updateTable() {
         thead.innerHTML = '';
         tbody.innerHTML = '';
 
+        jsonHeaders = jsonData.headers;
+        jsonBody = jsonData.data
+
         // Loop through the data and create table rows
         const headerRow = document.createElement('tr');
         //Loop through table headers
-        jsonData.headers.forEach( header => {
+        jsonHeaders.forEach( header => {
             const th = document.createElement('th');
             th.innerHTML = header;
             headerRow.appendChild(th);
@@ -77,7 +80,7 @@ async function updateTable() {
 
         //Loop through table data
         let i = 0;
-        jsonData.data.forEach( row => {
+        jsonBody.forEach( row => {
             const newRow = document.createElement('tr');
             row.forEach(cell => {
                 const td = document.createElement('td');
@@ -96,6 +99,7 @@ async function updateTable() {
         let tableValue = document.createElement('input');
         tableValue.setAttribute("type", "hidden");
         tableValue.setAttribute("id", "form_name");
+        tableValue.setAttribute("name", "form_name");
         tableValue.setAttribute("value", tableName);
 
         form.appendChild(tableValue);
@@ -103,7 +107,7 @@ async function updateTable() {
         //Starts to loop through column names and adding input and labels
         let count = 1;
 
-        jsonData.headers.forEach( column => {
+        jsonHeaders.forEach( column => {
             let label = document.createElement('label');
             let input = document.createElement('input');
             let br1 = document.createElement('br');
@@ -145,6 +149,7 @@ async function updateTable() {
         tableValue = document.createElement('input');
         tableValue.setAttribute("type", "hidden");
         tableValue.setAttribute("id", "form_name");
+        tableValue.setAttribute("name", "form_name");
         tableValue.setAttribute("value", tableName);
 
         form.appendChild(tableValue);
@@ -152,7 +157,7 @@ async function updateTable() {
         //Starts to loop through column names and adding input and labels
         count = 1;
 
-        jsonData.headers.forEach( column => {
+        jsonHeaders.forEach( column => {
             let label = document.createElement('label');
             let input = document.createElement('input');
             let br1 = document.createElement('br');
@@ -187,158 +192,10 @@ async function updateTable() {
 
 
         // Update Inputs
-        form = document.getElementById('updateValues');
-        form.innerHTML = '';
-
-        //Creates hidden input with table name
-        tableValue = document.createElement('input');
-        tableValue.setAttribute("type", "hidden");
-        tableValue.setAttribute("id", "form_name");
-        tableValue.setAttribute("value", tableName);
-
-        form.appendChild(tableValue);
-
-        //Creates Selection
-        let updateField = document.createElement('label');
-        br = document.createElement('br');
-        let select = document.createElement('select');
-
-        updateField.setAttribute("for", "field-select");
-        updateField.innerHTML = "Update Field:";
-
-        select.setAttribute("name", "field-select");
-        select.setAttribute("id", "field-select");
-
-
-        jsonData.headers.forEach( column => {
-            let option = document.createElement('option');
-            option.setAttribute("value", column);
-            option.innerHTML = column;
-            select.appendChild(option);
-        });
-
-        form.appendChild(updateField);
-        form.appendChild(br);
-        form.appendChild(select);
-
-
-        //Adds the input for the value that will be used in the update
-        let updateValue = document.createElement('label');
-        brElem1 = document.createElement('br');
-        brElem2 = document.createElement('br');
-        brElem3 = document.createElement('br');
-        let updateInput = document.createElement('input');
-
-        updateValue.setAttribute("for", "updateValue");
-        updateValue.innerHTML = "With Value:";
-
-        updateInput.setAttribute("type", "text");
-        updateInput.setAttribute("for", "updateValue");
-        updateInput.setAttribute("name", "updateValue");
-
-
-        form.appendChild(updateValue);
-        form.appendChild(brElem1);
-        form.appendChild(updateInput);
-        form.appendChild(bElem2);
-        form.appendChild(bElem3);
-
-        let para = document.createElement('p');
-        brElem1 = document.createElement('br');
-
-
-        para.innerHTML = "Where columns are:";
-
-        form.appendChild(para);
-        form.appendChild(brElem1);
-
-
-        //Starts to loop through column names and adding input and labels
-        //This is for the WHERE clause inputs
-        count = 1;
-
-        jsonData.headers.forEach( column => {
-            let label = document.createElement('label');
-            let input = document.createElement('input');
-            let br1 = document.createElement('br');
-            let br2 = document.createElement('br');
-            let br3 = document.createElement('br');
-
-            label.setAttribute("for", `update${count}`);
-            label.innerHTML = `${column}:`;
-
-            input.setAttribute("type", "text");
-            input.setAttribute("id", `update${count}`);
-            input.setAttribute("name", `update${count}`);
-            input.setAttribute("placeholder", `${column}`);
-
-            form.appendChild(label);
-            form.appendChild(br1);
-
-            form.appendChild(input);
-            form.appendChild(br2);
-            form.appendChild(br3);
-
-            count += 1;
-        });
-
-        // Form button appened
-        button = document.createElement('button');
-        button.setAttribute("type", "submit");
-        button.setAttribute("id", "update-submit");
-        button.innerHTML = "Update Row(s)";
-
-        form.appendChild(button);
-
+        UpdateUpdateSection(jsonHeaders, tableName)
 
         // Read Inputs (form in this case is a div)
-        form = document.getElementById('readValues');
-        form.innerHTML = '';
-
-        //Creates hidden input with table name
-        tableValue = document.createElement('input');
-        tableValue.setAttribute("type", "hidden");
-        tableValue.setAttribute("id", "form_name");
-        tableValue.setAttribute("value", tableName);
-
-        form.appendChild(tableValue);
-
-        //Starts to loop through column names and adding input and labels
-        count = 1;
-
-        jsonData.headers.forEach( column => {
-            let label = document.createElement('label');
-            let input = document.createElement('input');
-            let br1 = document.createElement('br');
-            let br2 = document.createElement('br');
-            let br3 = document.createElement('br');
-
-            label.setAttribute("for", `read${count}`);
-            label.innerHTML = `${column}:`;
-
-            input.setAttribute("type", "text");
-            input.setAttribute("id", `read${count}`);
-            input.setAttribute("name", `read${count}`);
-            input.setAttribute("placeholder", `${column}`);
-
-            form.appendChild(label);
-            form.appendChild(br1);
-
-            form.appendChild(input);
-            form.appendChild(br2);
-            form.appendChild(br3);
-
-            count += 1;
-        });
-
-        // Form button appened
-        button = document.createElement('button');
-        button.setAttribute("onclick", "updateTableWithQuery()");
-        button.setAttribute("id", "read-submit");
-        button.innerHTML = "Read Row(s)";
-
-        form.appendChild(button);
-
+        UpdateReadSection(jsonHeaders, tableName)
 
 
     } catch (error) {
@@ -349,19 +206,189 @@ async function updateTable() {
 
 // END UpdateTable() --------------------------------------------------
 
-async function updateTableWithQuery() {
+function UpdateUpdateSection(jsonHeaders, tableName) {
+    let form = document.getElementById('updateValues');
+    form.innerHTML = '';
+
+    //Creates hidden input with table name
+    let hiddenInput = document.createElement('input');
+    hiddenInput.setAttribute("type", "hidden");
+    hiddenInput.setAttribute("id", "form_name");
+    hiddenInput.setAttribute("name", "form_name");
+    hiddenInput.setAttribute("value", tableName);
+
+    form.appendChild(hiddenInput);
+
+    //Creates Selection
+    let selectLabel = document.createElement('label');
+    let brElem1 = document.createElement('br');
+    let brElem2 = document.createElement('br');
+    let brElem3 = document.createElement('br');
+    let select = document.createElement('select');
+
+    selectLabel.setAttribute("for", "field-select");
+    selectLabel.innerHTML = "Update Field:";
+
+    select.setAttribute("name", "field-select");
+    select.setAttribute("id", "field-select");
+
+
+    jsonHeaders.forEach( column => {
+        let option = document.createElement('option');
+        option.setAttribute("value", column);
+        option.innerHTML = column;
+        select.appendChild(option);
+    });
+
+    form.appendChild(selectLabel);
+    form.appendChild(brElem1);
+    form.appendChild(select);
+    form.appendChild(brElem2);
+    form.appendChild(brElem3);
+
+
+    //Adds the input for the value that will be used in the update
+    let newValueLabel = document.createElement('label');
+    brElem1 = document.createElement('br');
+    brElem2 = document.createElement('br');
+    brElem3 = document.createElement('br');
+    let newValueInput = document.createElement('input');
+
+    newValueLabel.setAttribute("for", "updateValue");
+    newValueLabel.innerHTML = "With Value:";
+
+    newValueInput.setAttribute("type", "text");
+    newValueInput.setAttribute("for", "updateValue");
+    newValueInput.setAttribute("name", "updateValue");
+
+
+    form.appendChild(newValueLabel);
+    form.appendChild(brElem1);
+    form.appendChild(newValueInput);
+    form.appendChild(brElem2);
+    form.appendChild(brElem3);
+
+    let para = document.createElement('p');
+    brElem1 = document.createElement('br');
+
+    para.textContent = "Where columns are:";
+
+    form.appendChild(para);
+    form.appendChild(brElem1);
+
+    let count = 1;
+
+    //Starts to loop through column names and adding input and labels for WHERE clause
+    jsonHeaders.forEach( head => {
+        let label = document.createElement('label');
+        let input = document.createElement('input');
+        let br1 = document.createElement('br');
+        let br2 = document.createElement('br');
+        let br3 = document.createElement('br');
+
+        label.setAttribute("for", `update${count}`);
+        label.innerHTML = `${head}:`;
+
+        input.setAttribute("type", "text");
+        input.setAttribute("id", `update${count}`);
+        input.setAttribute("name", `update${count}`);
+        input.setAttribute("placeholder", `${head}`);
+
+        form.appendChild(label);
+        form.appendChild(br1);
+
+        form.appendChild(input);
+        form.appendChild(br2);
+        form.appendChild(br3);
+
+        count += 1;
+    });
+
+    // Form button appened
+    let button = document.createElement('button');
+    button.setAttribute("type", "submit");
+    button.setAttribute("id", "update-submit");
+    button.innerHTML = "Update Row(s)";
+
+    form.appendChild(button);
+}
+
+function UpdateReadSection(jsonHeaders, tableName) {
+    
+    let form = document.getElementById('readValues');
+    form.innerHTML = '';
+
+    //Creates hidden input with table name
+    let hiddenInput = document.createElement('input');
+    hiddenInput.setAttribute("type", "hidden");
+    hiddenInput.setAttribute("id", "form_name_r");
+    hiddenInput.setAttribute("value", tableName);
+
+    form.appendChild(hiddenInput);
+
+    //Starts to loop through column names and adding input and labels
+    let count = 1;
+
+    jsonHeaders.forEach( column => {
+        let label = document.createElement('label');
+        let input = document.createElement('input');
+        let br1 = document.createElement('br');
+        let br2 = document.createElement('br');
+        let br3 = document.createElement('br');
+
+        label.setAttribute("for", `read${count}`);
+        label.innerHTML = `${column}:`;
+
+        input.setAttribute("type", "text");
+        input.setAttribute("id", `read${count}`);
+        input.setAttribute("name", `read${count}`);
+        input.setAttribute("placeholder", `${column}`);
+
+        form.appendChild(label);
+        form.appendChild(br1);
+
+        form.appendChild(input);
+        form.appendChild(br2);
+        form.appendChild(br3);
+
+        count += 1;
+    });
+
+    let input = document.createElement('input');
+    input.setAttribute("type", "hidden");
+    input.setAttribute("id", "read-count");
+    input.setAttribute("value", `${count-1}`);
+
+    form.appendChild(input);
+
+    // Form button appened
+    let button = document.createElement('button');
+    button.setAttribute("onclick", "UpdateTableWithQuery()");
+    button.setAttribute("id", "read-submit");
+    button.innerHTML = "Send Query";
+
+    form.appendChild(button);
+}
+
+
+async function UpdateTableWithQuery() {
 
     try {
-        // Fetch the data from Flask's '/prices' route
-        let table = document.getElementById('form_name').value;
-        let read1 = document.getElementById('read1').value;
-        let read2 = document.getElementById('read2').value;
-        let read3 = document.getElementById('read3').value;
-        let read4 = document.getElementById('read4').value;
-        let read5 = document.getElementById('read5').value;
 
+        let tableName = document.getElementById('form_name_r').value;
+        let fieldCount = document.getElementById('read-count').value;
+        let argument = `/read?table=${tableName}&`;
 
-        const response = await fetch(`/read?table=${table}&read1=${read1}&read2=${read2}&read3=${read3}&read4=${read4}&read5=${read5}`);
+        for (i = 1; i <= fieldCount; i++){
+            let name = "read" + i;
+            let element = document.getElementById(`${name}`).value;
+            argument = argument + name + "=" + element;
+            if(i != fieldCount){
+                argument = argument + "&";
+            }
+        }
+
+        const response = await fetch(argument);
         const jsonData = await response.json();
 
         // Get the table body element
