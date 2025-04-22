@@ -9,7 +9,8 @@ def RunQuery(query):
 
     fieldNames = [description[0] for description in cursor.description]
 
-    result = cursor.fetchall()
+    result1 = cursor.fetchall()
+    result = result1[1:]
     conn.commit()
     conn.close()
 

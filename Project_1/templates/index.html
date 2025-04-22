@@ -22,6 +22,7 @@
                 <option value="Vehicles">Vehicles</option>
                 <option value="Products">Products</option>
             </select>
+            <button id="query-1" onclick="SQLQuery(-1)">Reset View</button>
             <table id="information">
                 <thead id = "info-thead">
 
@@ -145,6 +146,13 @@
                 <!-- Submit Button -->
                 <button onclick="UpdateTableWithQuery()" id="read-submit">Send Query</button>
             </div>
+
+            <ul>
+                <li><button id="query0" onclick="SQLQuery(0)">Show Price with Product</button></li>
+                <li><button id="query1" onclick="SQLQuery(1)">Show Character with Creator</button></li>
+                <li><button id="query2" onclick="SQLQuery(2)">Show Prices of Vehicle Products</button></li>
+                <li><button id="query3" onclick="SQLQuery(3)">Show Objects of the same Universe</button></li>
+            </ul>
 
         </main>
 

@@ -163,6 +163,18 @@ def ReadRow():
     return jsonify(dataTable)  # Display data as JSON
 
 
+@sfapp.route('/tableQuery', methods=['GET'])
+def FulfillQuery():
+    query = request.args.get('query')
+    fieldNames, fieldData = RunQuery(query)
+
+    data = {
+        "headers": fieldNames,
+        "data": fieldData
+    }
+
+    return jsonify(data)  # Display data as JSON
+
 
 
 if __name__ == '__main__':

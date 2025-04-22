@@ -438,11 +438,64 @@ function changeOperation() {
     }
 }
 
+async function SQLQuery(input) {
+
+    let result;
+
+    switch (input) {
+        case -1:
+            location.reload(true);
+            break;
+        case 0:
+            result = "SELECT * FROM Prices JOIN Products ON Prices.Combination_Id = Products.Combination_Id";
+            break;
+        case 1:
+            result = "SELECT * FROM Characters JOIN Creators ON Characters.Universe = Creators.Universe";
+            break;
+        case 2:
+            result = "SELECT * FROM Prices JOIN Products ON Prices.Combination_Id = Products.Combination_Id JOIN Vehicles ON Products.design_Id = Vehicles.Design_Id";
+            break;
+        case 3:
+            result = "SELECT * FROM Characters JOIN Places ON Characters.Universe = Places.Universe JOIN Vehicles ON Characters.Universe = Places.Universe";
+            break;
+    }
+
+    const response = await fetch(`/tableQuery?query=${result}`);
+    const jsonData = await response.json();
+
+    // Get the table body element
+    const thead = document.getElementById("info-thead");
+    const tbody = document.getElementById("info-tbody");
+
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
+
+    jsonHeaders = jsonData.headers;
+    jsonBody = jsonData.data
+
+    // Loop through the data and create table rows
+    const headerRow = document.createElement('tr');
+    //Loop through table headers
+    jsonHeaders.forEach( header => {
+        const th = document.createElement('th');
+        th.innerHTML = header;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow)
 
 
-// document.addEventListener("DOMContentLoaded", function() {
+    //Loop through table data
+    let i = 0;
+    jsonBody.forEach( row => {
+        const newRow = document.createElement('tr');
+        row.forEach(cell => {
+            const td = document.createElement('td');
+            td.innerHTML = cell;
+            newRow.appendChild(td);
+        });
+        tbody.appendChild(newRow);
+    });
+    console.log('Table loaded.')
+}
 
-//     document.getElementById("read-submit").addEventListener("click", updateTableWithQuery());
-
-// });
 

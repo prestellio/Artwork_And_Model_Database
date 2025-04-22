@@ -39,6 +39,7 @@ table {
     border: solid 2px #829fb6;
     background-color: #ffffff;
     box-shadow: inset 0px 0px 10px black;
+    max-width: 90vw;
 }
 
 tr {
@@ -73,6 +74,20 @@ div form {
     box-shadow: 0;
     margin: 0;
     padding: 0;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    text-align: center;
+}
+
+ul button {
+    margin: 10px 20px;
+    text-align: center;
+    width: 200px;
 }
 
 input {
